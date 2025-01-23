@@ -19,7 +19,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'"
   },
@@ -47,6 +46,7 @@
     "@commitlint/config-conventional": "^19.6.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
     "husky": "^9.1.7",

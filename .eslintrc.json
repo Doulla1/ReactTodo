@@ -6,7 +6,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,10 +18,11 @@
   },
   "plugins": [
     "react",
-    "prettier"
+    "prettier",
+    "jest"
   ],
   "rules": {
-    "prettier/prettier": "warn",
+    "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off"
   }
 }
