@@ -1,99 +1,68 @@
-import { Component } from 'react';
+import React, { useState } from 'react';
 import Button from './common/Button';
 import TodoList from './common/TodoList';
 import EditableTextField from './common/EditableTextField';
 
-class MainPage extends Component {
-    constructor(props) {
-        super(props);
+const MainPage = () => {
+    // État pour gérer les listes
+    const [lists, setLists] = useState([{ name: 'Today' }]);
 
-        this.lists = [];
+    /**
+     * Ajoute une nouvelle liste avec un nom par défaut.
+     */
+    const addNewList = () => {
+        const newList = { name: `List ${lists.length + 1}` };
+        setLists((prevLists) => [...prevLists, newList]);
+    };
 
-        this.state = {
-            count: 0,
-        };
+    /**
+     * Met à jour le nom d'une liste à un index donné.
+     * @param {Object} event - L'événement provenant de l'input.
+     */
+    const updateListName = (event) => {
+        const { value, dataset } = event.target;
+        const index = Number(dataset?.index);
 
-        this.handleEvent1 = this.handleEvent1.bind(this);
-        this.handleEvent2 = this.handleEvent2.bind(this);
-        this.handleEvent3 = this.handleEvent3.bind(this);
-    }
-
-    componentDidMount() {
-        this.lists.push({
-            name: 'Today',
-        });
-        this.forceUpdate();
-    }
-
-    componentDidUpdate(_, prevState) {
-        const { count } = this.state;
-
-        if (prevState.count !== count) {
-            this.forceUpdate();
-            console.log('re render');
+        if (!isNaN(index)) {
+            setLists((prevLists) => {
+                const updatedLists = [...prevLists];
+                updatedLists[index] = { ...updatedLists[index], name: value };
+                return updatedLists;
+            });
         }
-    }
+    };
 
-    updateCount() {
-        const { count } = this.state;
-        this.setState({
-            count: count + 1,
-        });
-    }
+    /**
+     * Supprime une liste à un index donné.
+     * @param {Object} event - L'événement provenant du bouton "Remove".
+     */
+    const removeList = (event) => {
+        const index = Number(event?.target?.dataset?.index);
 
-    handleEvent1() {
-        var { lists } = this;
-        var newList = {
-            name: 'List' + lists.length + 1,
-        };
-
-        lists.push(newList);
-        this.lists = lists;
-        this.updateCount();
-    }
-
-    handleEvent2(event) {
-        var { value, dataset } = event.target;
-        var index = dataset?.index ?? null;
-
-        if (index !== null) {
-            const { lists } = this;
-            lists[index].name = value;
+        if (!isNaN(index)) {
+            setLists((prevLists) => prevLists.filter((_, i) => i !== index));
         }
-        this.updateCount();
-    }
+    };
 
-    handleEvent3(event) {
-        var index = event?.target?.dataset?.index ?? null;
+    return (
+        <div>
+            {/* Affiche toutes les listes */}
+            {lists.map((list, index) => (
+                <section key={`list-${index}`}>
+                    <EditableTextField
+                        value={list.name}
+                        onChange={updateListName}
+                        onRemove={removeList}
+                        index={index}
+                    />
+                    <TodoList />
+                </section>
+            ))}
 
-        if (index !== null) {
-            const { lists } = this;
-            lists.splice(index, 1);
-            this.lists = lists;
-            this.updateCount();
-        }
-    }
-
-    render() {
-        var { lists } = this;
-
-        return (
-            <div>
-                {lists.map((list, index) => (
-                    <section key={'list-' + index}>
-                        <EditableTextField
-                            value={list.name}
-                            onChange={this.handleEvent2}
-                            onRemove={this.handleEvent3}
-                            index={index}
-                        />
-                        <TodoList />
-                    </section>
-                ))}
-                <Button label="Add list" onClick={this.handleEvent1} />
-            </div>
-        );
-    }
-}
+            {/* Bouton pour ajouter une nouvelle liste */}
+            <Button label="Add list" onClick={addNewList} />
+        </div>
+    );
+};
 
 export default MainPage;

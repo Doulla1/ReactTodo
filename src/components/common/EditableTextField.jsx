@@ -101,16 +101,16 @@ class EditableTextField extends Component {
 }
 
 EditableTextField.propTypes = {
-	value: PropTypes.string.isRequired,
-	onChange: PropTypes.func.isRequired,
-	onRemove: PropTypes.func.isRequired,
-	isEditButtonEnable: PropTypes.bool,
-	index: PropTypes.number,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
+    isEditButtonEnable: PropTypes.bool,
+    index: PropTypes.number,
 };
 
 EditableTextField.defaultProps = {
-	isEditButtonEnable: true,
-	index: 0,
+    isEditButtonEnable: true,
+    index: 0,
 };
 
 export default EditableTextField;
