@@ -2,51 +2,18 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 
-/**
- * Composant EditableTextField permet de modifier et de supprimer du texte.
- *
- * @param {string} value - La valeur du texte à afficher et à modifier.
- * @param {function} onChange - Fonction de rappel pour gérer la modification du texte.
- * @param {function} onRemove - Fonction de rappel pour gérer la suppression du texte.
- * @param {boolean} isEditButtonEnable - Indicateur pour activer/désactiver le bouton d'édition.
- * @param {number} index - Index de l'élément (pour identification).
- */
-const EditableTextField = ({
-    value,
-    onChange,
-    onRemove,
-    isEditButtonEnable,
-    index,
-}) => {
+const EditableTextField = ({ value, onChange, onRemove, isEditButtonEnable, index }) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleBlur = () => {
-        if (value) setIsEditing(false);
-    };
-
-    const handleChange = (event) => {
-        if (onChange) {
-            onChange(event);
-        } else {
-            console.error('onChange is not defined');
-        }
-    };
-
-    const handleEnterKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            handleBlur();
-        }
-    };
-
+    // Fonction pour gérer l'édition
     const handleEdit = () => {
-        setIsEditing(true);
+        setIsEditing(!isEditing);
     };
 
-    const handleRemove = (event) => {
+    // Fonction pour gérer la suppression
+    const handleRemove = () => {
         if (onRemove) {
-            onRemove(event);
-        } else {
-            console.error('onRemove is not defined');
+            onRemove(index);
         }
     };
 
@@ -54,9 +21,8 @@ const EditableTextField = ({
         <input
             type="text"
             value={value}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            onKeyDown={handleEnterKeyDown}
+            onChange={(e) => onChange && onChange(e.target.value, index)}
+            onBlur={handleEdit}
             data-index={index}
         />
     ) : (
@@ -70,6 +36,7 @@ const EditableTextField = ({
     );
 };
 
+// PropTypes pour valider les props du composant
 EditableTextField.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
@@ -78,6 +45,7 @@ EditableTextField.propTypes = {
     index: PropTypes.number,
 };
 
+// Valeurs par défaut pour les props
 EditableTextField.defaultProps = {
     value: '',
     onChange: null,
