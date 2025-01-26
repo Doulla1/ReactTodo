@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -12,5 +13,4 @@ root.render(
     </React.StrictMode>
 );
 
-// Exemple concret pour mesurer les performances
-reportWebVitals(console.log);
+reportWebVitals();

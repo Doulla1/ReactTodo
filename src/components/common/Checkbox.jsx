@@ -1,19 +1,29 @@
 import PropTypes from 'prop-types';
 
-// Un composant de type fonctionnel au lieu d'une classe
 const Checkbox = ({ checked, onChange, ...rest }) => (
-    <input type="checkbox" checked={checked} onChange={onChange} {...rest} />
+	<div className="form-check">
+		<input 
+			type="checkbox" 
+			className="form-check-input" 
+			checked={checked} 
+			onChange={onChange} 
+			{...rest} 
+		/>
+		<label className="form-check-label">
+			{rest.label}
+		</label>
+	</div>
 );
 
-// Définition des types des props
 Checkbox.propTypes = {
-    checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
+	checked: PropTypes.bool.isRequired,
+	onChange: PropTypes.func.isRequired,
+	label: PropTypes.string, // Adding label prop type
 };
 
-// Définition des valeurs par défaut des props
 Checkbox.defaultProps = {
-    checked: false, // Par défaut, la case n'est pas cochée
+	checked: false,
+	label: '', // Default label is an empty string
 };
 
 export default Checkbox;
