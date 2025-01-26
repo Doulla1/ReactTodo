@@ -70,7 +70,7 @@ const EditableTextField = ({
                 data-index={index}
                 style={{ cursor: 'pointer' }}
             >
-                Supprimer
+                Remove
             </button>
         </div>
     );
